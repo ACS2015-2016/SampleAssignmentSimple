@@ -1,54 +1,50 @@
 /**
- * Simple Linear Gradient 
+ * Array. 
  * 
- * The lerpColor() function is useful for interpolating
- * between two colors.
+ * An array is a list of data. Each piece of data in an array 
+ * is identified by an index number representing its position in 
+ * the array. Arrays are zero based, which means that the first 
+ * element in the array is [0], the second element is [1], and so on. 
+ * In this example, an array named "coswav" is created and
+ * filled with the cosine values. This data is displayed three 
+ * separate ways on the screen.  
  */
 
-// Constants
-int Y_AXIS = 1;
-int X_AXIS = 2;
-color b1, b2, c1, c2;
+
+float[] coswave; 
 
 void setup() {
   size(640, 360);
-
-  // Define colors
-  b1 = color(255);
-  b2 = color(0);
-  c1 = color(204, 102, 0);
-  c2 = color(0, 102, 153);
-
+  coswave = new float[width];
+  for (int i = 0; i < width; i++) {
+    float amount = map(i, 0, width, 0, PI);
+    coswave[i] = abs(cos(amount));
+  }
+  background(255);
   noLoop();
 }
 
 void draw() {
-  // Background
-  setGradient(0, 0, width/2, height, b1, b2, X_AXIS);
-  setGradient(width/2, 0, width/2, height, b2, b1, X_AXIS);
-  // Foreground
-  setGradient(50, 90, 540, 80, c1, c2, Y_AXIS);
-  setGradient(50, 190, 540, 80, c2, c1, X_AXIS);
-}
 
-void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
-
-  noFill();
-
-  if (axis == Y_AXIS) {  // Top to bottom gradient
-    for (int i = y; i <= y+h; i++) {
-      float inter = map(i, y, y+h, 0, 1);
-      color c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(x, i, x+w, i);
-    }
-  }  
-  else if (axis == X_AXIS) {  // Left to right gradient
-    for (int i = x; i <= x+w; i++) {
-      float inter = map(i, x, x+w, 0, 1);
-      color c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(i, y, i, y+h);
-    }
+  int y1 = 0;
+  int y2 = height/3;
+  for (int i = 0; i < width; i+=2) {
+    stroke(coswave[i]*255);
+    line(i, y1, i, y2);
   }
+
+  y1 = y2;
+  y2 = y1 + y1;
+  for (int i = 0; i < width; i+=2) {
+    stroke(coswave[i]*255 / 4);
+    line(i, y1, i, y2);
+  }
+  
+  y1 = y2;
+  y2 = height;
+  for (int i = 0; i < width; i+=2) {
+    stroke(255 - coswave[i]*255);
+    line(i, y1, i, y2);
+  }
+  
 }

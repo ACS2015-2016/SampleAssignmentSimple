@@ -1,50 +1,75 @@
-/**
- * Array. 
- * 
- * An array is a list of data. Each piece of data in an array 
- * is identified by an index number representing its position in 
- * the array. Arrays are zero based, which means that the first 
- * element in the array is [0], the second element is [1], and so on. 
- * In this example, an array named "coswav" is created and
- * filled with the cosine values. This data is displayed three 
- * separate ways on the screen.  
- */
+// we don't need outlines for any of these shapes
 
+void setup(){
+size (400, 400);
+noStroke();
 
-float[] coswave; 
+// the sky
+background(178, 231, 255);
 
-void setup() {
-  size(640, 360);
-  coswave = new float[width];
-  for (int i = 0; i < width; i++) {
-    float amount = map(i, 0, width, 0, PI);
-    coswave[i] = abs(cos(amount));
-  }
-  background(255);
-  noLoop();
+// ground
+fill(232, 235, 237);
+rect(0, 329, 400, 71);
+
+// set the size of the biggest snowball
+int snowballSize = 154;
+// set x coordinate of the snowman
+int snowmanX = 200;
+
+// bottom snowball
+fill(255, 255, 255);
+ellipse(snowmanX, 309, snowballSize, snowballSize);
+
+// middle snowball shadow
+fill(240, 240, 240);
+ellipse(snowmanX, 218, 0.8 * snowballSize, 0.8 * snowballSize);
+
+// middle snowball
+fill(255, 255, 255);
+ellipse(snowmanX, 212, 0.8 * snowballSize, 0.8 * snowballSize);
+
+// top snowball shadow
+fill(240, 240, 240);
+ellipse(snowmanX, 128, 0.6 * snowballSize, 0.6 *snowballSize);
+
+// top snowball
+fill(255, 255, 255);
+ellipse(snowmanX, 123, 0.6 * snowballSize, 0.6 *snowballSize);
+
+// buttons
+fill(153, 40, 40);
+ellipse(snowmanX, 194, 10, 10);
+ellipse(snowmanX, 222, 10, 10);
+
+//nose
+fill(255, 119, 0);
+triangle(snowmanX, 136, snowmanX, 147, snowmanX + 25, 151);
+
+// set color for eyes, hat, and arms
+fill(43, 38, 38);
+
+// eyes
+int eyeSize = 12;
+int distanceFromCenter = 22;
+ellipse(snowmanX - distanceFromCenter, 129, eyeSize, eyeSize);
+ellipse(snowmanX + distanceFromCenter, 129, eyeSize, eyeSize);
+
+// hat
+rect(snowmanX - 63, 92, 126, 5);
+rect(snowmanX - 39, 37, 76, 60);
+
+// for the arms, we want a thick line
+stroke(43, 38, 38);
+strokeWeight(2);
+
+// left arm
+line(snowmanX - 127, 140, snowmanX - 58, 187);
+line(snowmanX - 109, 117, snowmanX - 101, 157);
+line(snowmanX - 132, 171, snowmanX - 91, 165);
+
+// right arm
+line(snowmanX + 61, 192, snowmanX + 135, 144);
+line(snowmanX + 104, 165, snowmanX + 142, 169);
+line(snowmanX + 86, 176, snowmanX + 113, 125);
 }
-
-void draw() {
-
-  int y1 = 0;
-  int y2 = height/3;
-  for (int i = 0; i < width; i+=2) {
-    stroke(coswave[i]*255);
-    line(i, y1, i, y2);
-  }
-
-  y1 = y2;
-  y2 = y1 + y1;
-  for (int i = 0; i < width; i+=2) {
-    stroke(coswave[i]*255 / 4);
-    line(i, y1, i, y2);
-  }
-  
-  y1 = y2;
-  y2 = height;
-  for (int i = 0; i < width; i+=2) {
-    stroke(255 - coswave[i]*255);
-    line(i, y1, i, y2);
-  }
-  
 }
